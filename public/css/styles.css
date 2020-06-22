@@ -336,3 +336,9 @@ footer p {
 #register-button:hover {
     background-color: #b93333;
 }
+
+@media all and (min-width: 568px) and (max-width: 1024px) {}
+
+@media all and (min-width: 480px) and (max-width: 568px) {}
+
+@media all and (max-width: 480px) {}
