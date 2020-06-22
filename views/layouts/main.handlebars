@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">
+                <img src="images/logo_transparent.png" alt="Hunger Street Logo">
+            </a>
+            <ul>
+                {{!-- <li><a href="/">Home</a></li> --}}
+                <li><a href="/meals">Meals</a></li>
+                <li><a href="/registration">Sign Up</a></li>
+                <li class="login-button"><a href="/login">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {{{body}}}
+    </main>
+    <footer class="contact-footer">
+      <div class="footer-form">
+        <p>2020 - © | Andrew Alvarez</p>
+        <div class="social-network">
+            <a href="#"><img src="images/iconmonstr-facebook-4-64.png" alt="Facebook Logo"></a>
+            <a href="#"><img src="images/iconmonstr-instagram-11-64.png" alt="Instagram Logo"></a>
+            <a href="#"><img src="images/iconmonstr-twitter-4-64.png" alt=""></a>
+        </div>
+      </div>
+    </footer>
+</body>
+</html>

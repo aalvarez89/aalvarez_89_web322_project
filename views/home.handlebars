@@ -1,0 +1,31 @@
+<div class="hero">
+    <img src="images/hi_cropped.jpg" alt="Hero Image">
+</div>
+<h2 class="meals-h2">GET NASTY</h2>
+
+<div class="index-content">
+<p>Welcome to Hunger Street. A the place to grab the greasiest buns you'll ever eat in your life. Grab one of our hottest packages <a href="/meals">now!</a></p>
+
+<article class="meals-container">
+
+    {{#each services}}
+
+        {{#if this.isTopPkg }}
+            <div class="card">
+                <img class="item-pic" src={{this.imageURL}} alt={{this.name}}>
+                <span class="item-name">{{this.name}}</span>
+                <span class="item-syno">{{this.synopsis}}</span>
+                <span class="item-price">{{this.price}}</span>        
+            </div>
+            {{/if}}
+
+        {{/each}}
+    </div>
+</article>
+
+<div class="bottom-container">
+<img src="images/logo_transparent.png" alt="Hunger Street Logo" class="bottom-logo">
+
+</div>
+
+<script src="js/home.js"></script>

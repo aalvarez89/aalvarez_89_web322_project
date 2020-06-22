@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Open+Sans&display=swap');
+
+* {
+    font-family: 'Arimo', sans-serif;
+
+}
+
+/* Home */
+.hero {
+    background-color: whitesmoke;
+    height: 35vh;
+    width: 100%;
+    height: 400px;
+}
+.hero h3 {
+    position: relative;
+    /* left: 50%;
+    top: 50%; */
+    color: #E14242;
+    z-index: 1;
+}
+
+.hero img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(95%);
+}
+
+.index-content {
+    width: 100%;
+    /* padding: 0 3 30px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.index-content p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+}
+
+.index-content a {
+    color: #EACD65;
+}
+.index-content a:hover {
+    color: #E14242;
+    text-decoration: underline;
+}
+
+/* Meals */
+.meals-h2 {
+    font-family: 'Arimo', sans-serif;
+    padding: 40px 0;
+    text-align: center;
+    color: #E14242;
+    font-size: 3em;
+    font-weight: 700;
+}
+
+.meals-h3 {
+    font-family: 'Arimo', sans-serif;
+    padding: 40px 0;
+    text-align: center;
+    color: #E14242;
+    font-size: 2.2em;
+    font-weight: 700;
+}
+
+.meals-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #E14242;
+}
+
+.meals-menu {
+    width: 100%;
+    padding: 0 10% 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    color: #E14242;
+    box-sizing: border-box;
+}
+.card {
+    max-width: 200px;
+    max-height: 600px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.item-pic {
+    /* height: 300px; */
+    display: block;
+    width: 200px;
+    border: 2px #E14242 solid;
+    margin-bottom: 5px;
+}
+
+.item-name {
+    font-weight: 700;
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.item-price {
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.item-syno {
+    color: #EACD65;
+    font-size: 0.7em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.menu-card {
+    max-height: 200px;
+    width: 600px;
+    margin-bottom: 15px;
+    /* text-align: center; */
+    box-sizing: border-box;
+}
+
+.menu-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-name {
+    font-weight: 700;
+    font-size: 1.2em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.menu-price {
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.menu-syno {
+    color: #EACD65;
+    font-size: 0.7em;
+    font-style: italic;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Header */
+header {
+    background-color: #EACD65;
+    width: 100%;
+    height: 100px;
+}
+/* Navigation */
+nav {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    height: 100%;
+    width: 100%;
+}
+
+nav img {
+    height: 100%;
+    padding-left: 25px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav li {
+    font-size: 1em;
+    padding: 5px;
+    text-align: center;
+    margin-left: 10px;
+    color: whitesmoke;
+}
+
+nav a {
+    color: #E14242;
+    text-decoration: none;
+    font-size: 0.8em;
+}
+nav a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
+/* Main */
+
+main {
+    min-height: 100vh;
+    background-color: black;
+}
+
+main p {
+    color: white;
+}
+
+.bottom-container {
+    display: flex;
+    justify-content: center;
+}
+.bottom-logo {
+    width: 200px;
+}
+
+/* Footer */
+
+footer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    font-family: 'Arimo', sans-serif;
+    background-color: whitesmoke;
+    color: #EACD65;
+
+}
+
+footer p {
+    text-align: center;
+}
+
+.social-network {
+    margin: 30px 0 10px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.social-network img {
+    width: 60%;
+}
+
+/* Login Form */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login form {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 250px;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+
+    padding: 40px 20px;
+}
+.login form label {
+    margin-bottom: 10px;
+}
+.login form input {
+    margin-bottom: 10px;
+}
+
+#login-button {
+    background-color: #E14242;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+#register-button:hover {
+    background-color: #b93333;
+}
+
+/* Registration Form */
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register form {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 250px;
+
+    border: 1px solid lightgray;
+    border-radius: 5px;
+
+    padding: 40px 20px;
+}
+
+.register form label {
+    margin-bottom: 10px;
+}
+.register form input {
+    margin-bottom: 10px;
+}
+
+#register-button {
+    background-color: #E14242;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+#register-button:hover {
+    background-color: #b93333;
+}
