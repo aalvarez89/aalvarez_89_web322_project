@@ -1,53 +1,69 @@
 <h2 class="meals-h2">CREATE ACCOUNT</h2>
+
 <article class="register">
-        <form action="" method="">
-            <label for="form-fname">
+
+        <form action="/registration" method="POST">
+            {{!-- 
+            1)A label and an input are connected by an id(input) and a for(label)
+            2)The input [type] determines its functionality: text, password, email
+            3)[name] is for the naming the form <node /> for the backend API (also the widget (or "column names" in your db))
+            4)[value] is the actual string text
+            5)[placeholder] placeholder text
+
+            x)An input with a [type=submit] will submit the whole form
+              We can specify the type of request or [method] we want GET, POST, DELETE, PUT
+              and which route we want to go with [action]
+            
+            y)[name] attributes should have camelCase for consistency in js
+
+            z)bem methodology ./#blockName-elemName_modName_modVal
+
+
+            --}}
+            <label for="form-firstName">
                 First Name
             </label>
             <input
                 type="text"
-                id="form-fname"
-                name="FirstName"
+                id="form-firstName"
+                name="firstName"
                 placeholder="First Name"
-                autocomplete="off"
-                minlength="2"
-                required
+                {{!-- autocomplete="off" --}}
             />
-            <label for="form-lname">
+            <label for="form-lastName">
                 Last Name
             </label>
             <input
                 type="text"
-                id="form-lname"
-                name="LastName"
+                id="form-lastName"
+                name="lastName"
                 placeholder="Last Name"
-                autocomplete="off"
-                minlength="2"
-                required
+                {{!-- autocomplete="off" --}}
             />
-            <label for="user-email">
+            <label for="form-email">
                 Email
             </label>
             <input
-                id="user-email"
                 type="email"
-                name="_replyto"
+                id="form-email"
+                name="email"
                 placeholder="Email"
-                autocomplete="off"
-                required
+                {{!-- autocomplete="off" --}}
             />
-            <label for="user-password">
+            <label for="form-password">
                 Password
             </label>
             <input
-                id="user-password"
+                id="form-password"
                 type="password"
-                name="_replyto"
+                name="password"
                 placeholder="Password"
-                autocomplete="off"
-                required
+                {{!-- autocomplete="off" --}}
             />
 
-            <input id="register-button" type="submit" value="SIGN UP" />
+            <input id="form-submit" type="submit" value="SIGN UP" />
         </form>
     </article>
+
+
+    

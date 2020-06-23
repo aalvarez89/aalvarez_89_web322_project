@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: center;
     color: #E14242;
     box-sizing: border-box;
 }
@@ -125,7 +125,8 @@
 
 .menu-card {
     max-height: 200px;
-    width: 600px;
+    min-width: 350px;
+    max-width: 600px;
     margin-bottom: 15px;
     /* text-align: center; */
     box-sizing: border-box;
@@ -168,15 +169,21 @@ header {
 nav {
     display: flex;
     flex-direction: row;
+    justify-content: stretch;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     height: 100%;
     width: 100%;
 }
 
+.nav-logo {
+    /* display: none; */
+    width: 100px;
+}
+
 nav img {
     height: 100%;
-    padding-left: 25px;
+    /* padding-left: 25px; */
 }
 
 nav ul {
@@ -246,11 +253,14 @@ footer p {
     margin: 30px 0 10px;
     width: 300px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
-
+.footer-icon {
+    /* height: 60%; */
+    width: 2em;
+}
 .social-network img {
-    width: 60%;
+    width: 100%;
 }
 
 /* Login Form */
@@ -341,4 +351,37 @@ footer p {
 
 @media all and (min-width: 480px) and (max-width: 568px) {}
 
-@media all and (max-width: 480px) {}
+@media all and (max-width: 480px) {
+    .meals-container {
+        flex-direction: column;
+    }
+    main p {
+        text-align: center;
+        padding: 0 3%;
+    }
+    /* .item-pic {
+        width: 250px;
+    } */
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .item-name {
+        font-size: 1.4em;
+        margin-top: 12px;
+    }
+    .item-syno {
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+    .item-price {
+        font-size: 1em;   
+    }
+
+    .social-network {
+        width: 200px;
+    }
+    
+    
+
+}
