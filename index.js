@@ -38,22 +38,43 @@ app.get('/meals', (req, res) => {
     })
 })
 
-
+//Get /registration site
 app.get('/registration', (req, res) => {
     res.render('registration', {
         title: 'Register'
     })
 })
 
+//Handle submitted data from /registration form
 app.post('/registration', (req, res) => {
-    // res.render('registration', {
+    // res.render('registration', {})
+    let errors = [];
+    if (req.body.firstName == "") {
 
-    // })
-    console.log(`Phone Numer: ${req.body.firstName}`)
+        console.log(`You must enter a First Name`)
+    }
+
+    if (req.body.lastName == "") {
+
+        console.log(`You must enter a Last Name`)
+    }
 })
 
 app.get('/login', (req, res) => {
     res.render('login')
+})
+
+app.post('/login', (req, res) => {
+    let errors = [];
+    if (req.body.email == "") {
+
+        console.log(`Email required`)
+    }
+
+    if (req.body.password == "") {
+
+        console.log(`Password required`)
+    }
 })
 
 app.listen(3000, () => {
