@@ -6,7 +6,7 @@
             </label>
             <input
                 id="user-email"
-                type="email"
+                {{!-- type="email" --}}
                 name="_replyto"
                 placeholder="Email"
                 autocomplete="off"
@@ -20,7 +20,9 @@
                 name="_replyto"
                 placeholder="Password"
                 autocomplete="off"
+                {{!-- value={{ this.password }} --}}
             />
+            <p>{{ this.password }}</p>
 
             <input id="login-button" type="submit" value="Login!" />
         </form>

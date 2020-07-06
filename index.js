@@ -2,6 +2,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const db = require('./model/services.js');
 const bodyParser = require('body-parser');
+const e = require('express');
 // const file = require('fs');
 
 // app is an Express instance
@@ -48,33 +49,74 @@ app.get('/registration', (req, res) => {
 //Handle submitted data from /registration form
 app.post('/registration', (req, res) => {
     // res.render('registration', {})
-    let errors = [];
+
+    let errors = {
+        messages : [],
+        fName: "",
+        lName: "",
+        email: ""
+    };
+
+    
     if (req.body.firstName == "") {
 
-        console.log(`You must enter a First Name`)
+        errors.messages.push('You must enter a First Name')
+    } else {
+
+        errors.fName = req.body.firstName;
     }
 
     if (req.body.lastName == "") {
 
-        console.log(`You must enter a Last Name`)
+        errors.messages.push('You must enter a Last Name')
+    } else {
+        errors.lName = req.body.lastName;
     }
+
+     // Email Regex anyword+@+anyword+.+alphanumeric
+     if (req.body.email == "") {
+
+        errors.messages.push(`Email required`)
+    } else {
+        if (!req.body.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
+
+            errors.messages.push(`Email format invalid`)
+        } else {
+            errors.email = req.body.email;
+        }
+    }
+
+    // Password Regex 1 lowercase/uppercase/number/specialchar && 4 to 15 characters
+    if (req.body.password == "" ) {
+
+        errors.messages.push(`Password Required`)
+
+    } else if (!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/)) {
+
+        errors.messages.push(`Password requires 4-15 Characters and 1 Lowercase/Uppercase/Number/Special Character`)
+    }
+
+    if (errors.messages.length > 0) {
+        res.render('registration', errors)
+        console.log(errors.messages)
+    } else {
+        res.redirect('/')
+    }
+
 })
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {
+        title: 'Login'
+    })
 })
 
 app.post('/login', (req, res) => {
     let errors = [];
-    if (req.body.email == "") {
+   
 
-        console.log(`Email required`)
-    }
-
-    if (req.body.password == "") {
-
-        console.log(`Password required`)
-    }
+   
+    res.render('login')
 })
 
 app.listen(3000, () => {

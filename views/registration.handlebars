@@ -20,6 +20,8 @@
 
 
             --}}
+
+
             <label for="form-firstName">
                 First Name
             </label>
@@ -28,7 +30,9 @@
                 id="form-firstName"
                 name="firstName"
                 placeholder="First Name"
-                {{!-- autocomplete="off" --}}
+                autocomplete="off"
+
+                value="{{ fName }}"
             />
             <label for="form-lastName">
                 Last Name
@@ -38,7 +42,9 @@
                 id="form-lastName"
                 name="lastName"
                 placeholder="Last Name"
-                {{!-- autocomplete="off" --}}
+                autocomplete="off"
+
+                value="{{ lName }}"
             />
             <label for="form-email">
                 Email
@@ -49,7 +55,9 @@
                 id="form-email"
                 name="email"
                 placeholder="Email"
-                {{!-- autocomplete="off" --}}
+                autocomplete="off"
+
+                value="{{ email }}"
             />
             <label for="form-password">
                 Password
@@ -62,8 +70,15 @@
                 {{!-- autocomplete="off" --}}
             />
 
+
             <input id="form-submit" type="submit" value="SIGN UP" />
         </form>
+        <div class="errors">
+            {{#each messages}}
+                <p>{{this}}</p>
+            {{/each}}
+
+        </div>
     </article>
 
 
