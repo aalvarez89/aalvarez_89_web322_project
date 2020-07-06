@@ -5,6 +5,19 @@ const bodyParser = require('body-parser');
 const e = require('express');
 // const file = require('fs');
 
+const apiKey = require('./model/email.js');
+const emailService = new apiKey();
+
+const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(emailService.getKey());
+
+var API_KEY = emailService.getKey();
+var DOMAIN = emailService.getDomain();
+var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
+
+
+
+
 // app is an Express instance
 const app = express();
 
@@ -18,6 +31,7 @@ app.use(express.static('public'));
 // Parse Encoded URL, it tells Express to make form data available
 // via req.body in every request
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 const fakeDB = new db();
@@ -100,6 +114,17 @@ app.post('/registration', (req, res) => {
         res.render('registration', errors)
         console.log(errors.messages)
     } else {
+        const data = {
+            from: 'Excited User <me@samples.mailgun.org>',
+            to: 'aa.elijah89@gmail.com',
+            subject: 'Hello',
+            text: 'Testing some Mailgun awesomeness!'
+        };
+
+        mailgun.messages().send(data, (error, body) => {
+            console.log(body);
+        });
+          
         res.redirect('/')
     }
 
@@ -122,3 +147,8 @@ app.post('/login', (req, res) => {
 app.listen(3000, () => {
     console.log('Server up and listening!')
 })
+
+
+// echo "export SENDGRID_API_KEY='YOUR_API_KEY'" > sendgrid.env
+// echo "sendgrid.env" >> .gitignore
+// source ./sendgrid.env
