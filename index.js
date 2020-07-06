@@ -5,15 +5,15 @@ const bodyParser = require('body-parser');
 const e = require('express');
 // const file = require('fs');
 
+// Abstract Secret API KEY - (email.js is obfuscated in .gitignore)
 const apiKey = require('./model/email.js');
 const emailService = new apiKey();
 
-const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(emailService.getKey());
 
-var API_KEY = emailService.getKey();
-var DOMAIN = emailService.getDomain();
-var mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
+// Extract Sensitive info from Email Service
+const API_KEY = emailService.getKey();
+const DOMAIN = emailService.getDomain();
+const mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
 
 
 
@@ -62,7 +62,6 @@ app.get('/registration', (req, res) => {
 
 //Handle submitted data from /registration form
 app.post('/registration', (req, res) => {
-    // res.render('registration', {})
 
     let errors = {
         messages : [],
@@ -114,10 +113,11 @@ app.post('/registration', (req, res) => {
         res.render('registration', errors)
         console.log(errors.messages)
     } else {
+
         const data = {
             from: 'Excited User <me@samples.mailgun.org>',
             to: 'aa.elijah89@gmail.com',
-            subject: 'Hello',
+            subject: `Hello ${req.body.firstName}`,
             text: 'Testing some Mailgun awesomeness!'
         };
 
@@ -144,7 +144,8 @@ app.post('/login', (req, res) => {
     res.render('login')
 })
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     console.log('Server up and listening!')
 })
 
