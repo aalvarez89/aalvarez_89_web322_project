@@ -170,8 +170,6 @@ app.post('/login', (req, res) => {
         res.redirect('/')
     }
 
-   
-    // res.render('login')
 })
 
 const PORT = process.env.PORT || 3000;
