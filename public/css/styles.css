@@ -319,7 +319,7 @@ footer p {
     justify-content: center;
     align-items: center;
 
-    max-width: 250px;
+    max-width: 270px;
 
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -345,6 +345,18 @@ footer p {
 
 #register-button:hover {
     background-color: #b93333;
+}
+
+.errors {
+padding: 0 0 25px;
+}
+
+.errors p {
+    max-width: 180px;
+    color: #E14242;
+    font-size: 0.7em;
+    padding: 0;
+    margin-bottom: 5px;
 }
 
 @media all and (min-width: 568px) and (max-width: 1024px) {}

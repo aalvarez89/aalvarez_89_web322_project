@@ -1,29 +1,37 @@
 <h2 class="meals-h2">LOGIN</h2>
+
 <article class="login">
-        <form action="" method="">
-            <label for="user-email">
-                Email:
+    
+    <form action="/login" method="POST">
+
+            <div class="errors">
+                {{#each messages}}
+                    <p>{{this}}</p>
+                {{/each}}
+            </div>
+
+            <label for="form-email">
+                Email
             </label>
             <input
-                id="user-email"
-                {{!-- type="email" --}}
-                name="_replyto"
+                type="text"
+                id="form-email"
+                name="email"
                 placeholder="Email"
                 autocomplete="off"
+
+                value="{{ email }}"
             />
-            <label for="user-password">
-                Password:
+            <label for="form-password">
+                Password
             </label>
             <input
-                id="user-password"
+                id="form-password"
                 type="password"
-                name="_replyto"
+                name="password"
                 placeholder="Password"
-                autocomplete="off"
-                {{!-- value={{ this.password }} --}}
             />
-            <p>{{ this.password }}</p>
 
-            <input id="login-button" type="submit" value="Login!" />
-        </form>
-    </article>
+        <input id="login-button" type="submit" value="Login!" />
+    </form>
+</article>

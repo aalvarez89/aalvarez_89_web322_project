@@ -2,7 +2,6 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const db = require('./model/services.js');
 const bodyParser = require('body-parser');
-const e = require('express');
 // const file = require('fs');
 
 // Abstract Secret API KEY - (email.js is obfuscated in .gitignore)
@@ -115,10 +114,10 @@ app.post('/registration', (req, res) => {
     } else {
 
         const data = {
-            from: 'Excited User <me@samples.mailgun.org>',
-            to: 'aa.elijah89@gmail.com',
-            subject: `Hello ${req.body.firstName}`,
-            text: 'Testing some Mailgun awesomeness!'
+            from: `${req.body.firstName} ${req.body.lastName} <me@samples.mailgun.org>`,
+            to: req.body.email,
+            subject: `Hello ${req.body.firstName}, we know you're Hungry`,
+            text: 'Get ready to eat a big fat burguer! Only @ Hunger Street!'
         };
 
         mailgun.messages().send(data, (error, body) => {
@@ -137,19 +136,45 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    let errors = [];
-   
+
+    let errors = {
+        messages : [],
+        email: ""
+    };
+
+    if (req.body.email == "") {
+
+        errors.messages.push(`Email required`)
+    } else {
+        if (!req.body.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
+
+            errors.messages.push(`Email format invalid`)
+        } else {
+            errors.email = req.body.email;
+        }
+    }
+
+    if (req.body.password == "" ) {
+
+        errors.messages.push(`Password Required`)
+
+    } else if (!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/)) {
+
+        errors.messages.push(`Password requires 4-15 Characters and 1 Lowercase / Uppercase / Number / Special Character`)
+    }
+
+    if (errors.messages.length > 0) {
+        res.render('login', errors)
+        console.log(errors.messages)
+    } else {
+        res.redirect('/')
+    }
 
    
-    res.render('login')
+    // res.render('login')
 })
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log('Server up and listening!')
 })
-
-
-// echo "export SENDGRID_API_KEY='YOUR_API_KEY'" > sendgrid.env
-// echo "sendgrid.env" >> .gitignore
-// source ./sendgrid.env

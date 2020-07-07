@@ -21,6 +21,12 @@
 
             --}}
 
+            <div class="errors">
+                {{#each messages}}
+                    <p>{{this}}</p>
+                {{/each}}
+            </div>
+
 
             <label for="form-firstName">
                 First Name
@@ -73,12 +79,7 @@
 
             <input id="form-submit" type="submit" value="SIGN UP" />
         </form>
-        <div class="errors">
-            {{#each messages}}
-                <p>{{this}}</p>
-            {{/each}}
-
-        </div>
+        
     </article>
 
 
