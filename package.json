@@ -10,10 +10,13 @@
   "author": "Andrew Alvarez",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.2.1",
+    "bcryptjs": "^2.4.3",
+    "client-sessions": "^0.8.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "mailgun-js": "^0.22.0",
+    "mongoose": "^5.9.25",
     "nodemon": "^2.0.4"
   }
 }
