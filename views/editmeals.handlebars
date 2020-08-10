@@ -1,0 +1,22 @@
+<div class="container">
+        {{#each meals}}
+        <div class="row">
+            <p> Name: {{this.name}}</p>
+            <p> Price: {{this.price}}</p>
+            <p> Description: {{this.synopsis}}</p>
+            <p> Image URL: {{this.imageUrl}}</p>
+            <p> Number of Meals: {{this.noOfMeals}}</p>
+            <p> Top Package: {{this.isTopPkg}}</p>
+            <div>
+                <a href="/edit?name={{name}}" class="btn btn-primary">Edit {{name}}</a>
+            </div>
+            <div>
+                <a href="/delete?name={{name}}" class="btn btn-primary">Delete</a>
+            </div>
+        </div>
+        </br>
+        {{else}}
+            <h4>No meals were found</h4>
+        {{/each}}
+    {{!-- {{/if}} --}}
+</div>

@@ -1,27 +1,26 @@
 
-<h2 class="meals-h2">DASHBOARD</h2>
+<h2 class="meals-h2">MEAL PACKAGES</h2>
 
+<h2 class="meals-h3">TOP MEALS</h2>
 
-
-<h2 class="meals-h3">Hello {{users.firstName}}</h2>
-
-
-<a href="/addmeals">Add Meal!</a>
-<a href="/editmeals">Edit Meal!</a>
-<a href="/store">Shop!</a>
-
-
-{{!-- <article class="meals-container">
+<article class="meals-container">
 
     {{#each services}}
 
         {{#if this.isTopPkg }}
             <div class="card">
-                <img class="item-pic" src={{this.imageURL}} alt={{this.name}}>
+                <img class="item-pic" src="{{this.imageUrl}}" alt="{{this.name}}">
                 <span class="item-name">{{this.name}}</span>
                 <span class="item-syno">{{this.synopsis}}</span>
                 <span class="item-price">{{this.price}}</span>        
             </div>
+            <button>
+                Add
+            </button>
+            <button>
+                Remove
+            </button>
+
             {{/if}}
 
         {{/each}}
@@ -46,4 +45,4 @@
 
         {{/each}}
     </div>
-</article> --}}
+</article>

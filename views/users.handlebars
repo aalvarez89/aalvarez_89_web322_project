@@ -1,0 +1,16 @@
+{{#each users}}
+
+            {{!-- <div class="card">
+                <img class="item-pic" src={{this.imageURL}} alt={{this.name}}>
+                <span class="item-name">{{this.name}}</span>
+                <span class="item-syno">{{this.synopsis}}</span>
+                <span class="item-price">{{this.price}}</span>        
+            </div> --}}
+
+            <div>{{this.firstName}}</div>
+            <div>{{this.lastName}}</div>
+            <div>{{this.email}}</div>
+            <div>{{this.password}}</div>
+            <button>edit</button>
+
+        {{/each}}

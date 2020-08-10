@@ -1,0 +1,94 @@
+<article class="addmeals">
+
+        <form action="/addmeals" method="POST">
+            
+
+            <div class="errors">
+                {{#each messages}}
+                    <p>{{this}}</p>
+                {{/each}}
+            </div>
+
+
+            <label for="form-name">
+                Meal Name
+            </label>
+            <input
+                type="text"
+                id="form-name"
+                name="name"
+                placeholder="Meal Name"
+                autocomplete="off"
+
+                value="{{ name }}"
+            />
+
+
+            <label for="form-price">
+                Meal Price
+            </label>
+            <input
+                type="text"
+                id="form-price"
+                name="price"
+                placeholder="Meal Price"
+                autocomplete="off"
+
+                value="{{ price }}"
+            />
+
+            <label for="form-synopsis">
+                Description
+            </label>
+            <input
+                type="text"
+                id="form-synopsis"
+                name="synopsis"
+                placeholder="Description"
+                autocomplete="off"
+
+                value="{{ synopsis }}"
+            />
+
+            <label for="form-noOfMeals">
+                No. of Meals
+            </label>
+            <input
+                id="form-noOfMeals"
+                type="text"
+                name="noOfMeals"
+                placeholder="#"
+
+                value="{{ noOfMeals }}"
+            />
+
+            <label for="form-imageUrl">
+                Image URL
+            </label>
+            <input
+                id="form-imageUrl"
+                type="text"
+                name="imageUrl"
+                placeholder="URL"
+                
+                value="{{ imageUrl }}"
+            />
+
+            <label for="form-isTopPkg">
+                Top Package
+            </label>
+            <input
+                id="form-isTopPkg"
+                type="radio"
+                name="isTopPkg"
+                
+                {{!-- value="{{ isTopPkg }}" --}}
+            />
+
+            
+
+
+            <input id="form-submit" type="submit" value="ADD MEAL" />
+        </form>
+        
+    </article>

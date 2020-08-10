@@ -19,11 +19,11 @@ const userSchema = new Schema({
 })
 
 const mealSchema = new Schema({
-    imageUrl: String,
     name: String,
-    synopsis: String,
     price: String,
+    synopsis: String,
     noOfMeals: Number,
+    imageUrl: String,
     isTopPkg: Boolean
 })
 
@@ -63,7 +63,7 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
         
         // Set data to null if the form entry is an empty string
         for (let formEntry in data) {
-            console.log(formEntry)
+            //console.log(formEntry)
             if (data[formEntry] == '') data[formEntry] = null;
         }
 
@@ -78,6 +78,7 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
             // Argument [hash] is the returned encrypted string
             // Store the resulting "hash" value into the dataset
             newUser.password = hash;
+            newUser.isAdmin = false;
 
             // Save input data in database
 
@@ -87,7 +88,7 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
                     reject()
                 }
                 else {
-                    console.log(`User [${data.name}] stored in database: `)
+                    console.log('User stored in database.')
                     resolve()
                 }
             })
@@ -106,8 +107,10 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
 module.exports.createMeal = (data) => {
     return new Promise ((resolve, reject) => {
         
+        data.isTopPkg = (data.isTopPkg)? true: false;
+
         for (let formEntry in data) {
-            console.log(formEntry)
+            console.log(formEntry, formEntry.valueOf())
             if (data[formEntry] == '') data[formEntry] = null;
         }
 
@@ -115,11 +118,11 @@ module.exports.createMeal = (data) => {
 
         newMeal.save((err) => {
             if (err) {
-                console.log(`ERROR: ${err}`)
+                console.error(`ERROR: ${err}`)
                 reject()
             }
             else {
-                console.log(`Meal [${data.name.toUpperCase()}] stored in database: `)
+                console.log(`Meal [${data.name}] stored in database: `)
                 resolve()
             }
         })
@@ -142,6 +145,35 @@ module.exports.getUsers = (data) => {
             resolve(returnedUsers.map((user) => user.toObject()))
         }).catch((err) => {
             console.log(`Error retrieving Users: ${err}`)
+            reject(err)
+        })
+    })
+}
+
+module.exports.getMeals = (data) => {
+    return new Promise ((resolve, reject) => {
+        Meals.find()
+        .exec() //tells mongoose that we should run this find as a promise.
+        .then((returnedMeals) => {
+            resolve(returnedMeals.map((meal) => meal.toObject()))
+        }).catch((err) => {
+            console.log(`Error retrieving Meals: ${err}`)
+            reject(err)
+        })
+    })
+}
+
+module.exports.getMealsByName = (inName) => {
+    return new Promise ((resolve, reject) => {
+        Meals.find({name: inName})
+        .exec() //tells mongoose that we should run this find as a promise.
+        .then((returnedMeals) => {
+
+            if(returnedMeals.length != 0) resolve(returnedMeals.map((meal) => meal.toObject()))
+            else reject('No Meals found')
+
+        }).catch((err) => {
+            console.log(`Error retrieving Meals: ${err}`)
             reject(err)
         })
     })
@@ -171,6 +203,31 @@ module.exports.editUser = (editData) => {
         bcrypt.genSalt(10)
         .then(salt => bcrypt.hash(editData.password,salt))
     })
+}
+
+module.exports.editMeal = (editData)=>{
+    return new Promise((resolve, reject)=>{
+        editData.isTopPkg = (editData.isTopPkg)? true: false;
+       
+        Meals.updateOne(
+        {name : editData.name}, //what do we updateBy/How to find entry
+        {$set: {  //what fields are we updating
+            name: editData.name,
+            price: editData.price,
+            synopsis: editData.synopsis,
+            imageUrl: editData.imageUrl,
+            noOfMeals: editData.noOfMeals,
+            isTopPkg: editData.isTopPkg
+        }})
+        .exec() //calls the updateOne as a promise
+        .then(()=>{
+            console.log(`Meal ${editData.name} has been updated`);
+            resolve();
+        }).catch((err)=>{
+            reject(err);
+        });
+     
+    });
 }
 // DELETE
 

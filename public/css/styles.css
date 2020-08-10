@@ -359,6 +359,13 @@ padding: 0 0 25px;
     margin-bottom: 5px;
 }
 
+.container {
+    background-color: white;
+}
+
+.container p {
+    color: black;
+}
 @media all and (min-width: 568px) and (max-width: 1024px) {}
 
 @media all and (min-width: 480px) and (max-width: 568px) {}

@@ -68,9 +68,16 @@ const clientSessions = require("client-sessions");
 app.use(clientSessions({
     cookieName: "session",          // this is the object name that will be added to 'req'
     secret: "week10example_web322", // this should be a long un-guessable string.
-    duration: 1 * 60 * 1000,        // duration of the session in milliseconds (4 minutes)
+    duration: 10 * 60 * 1000,        // duration of the session in milliseconds (4 minutes)
     activeDuration: 60/60 * 1000    // the session will be extended by this many ms each request (1 minutes)
   }));
+
+
+// --------------- AJAX -----------------
+
+// Setup Body Parser to receive JSON text from AJAX calls. 
+app.use(bodyParser.json());
+const cart = require('./cart_module.js');
 
 
 // ------------- MIDDLEWARE -------------
@@ -79,10 +86,19 @@ app.use(clientSessions({
 // app.use((req, res, next) => {})
 
 app.get('/', (req, res) => {
+
+
     res.render('home', {
         title: 'Hunger Street',
         services: fakeDB.getServices(),
     })
+
+    // ** OLD WAY -> Implemented fake database module in model/services.js
+
+    // res.render('home', {
+    //     title: 'Hunger Street',
+    //     services: fakeDB.getServices(),
+    // })
 })
 
 function ensureLogin(req, res, next) {
@@ -94,26 +110,49 @@ function ensureLogin(req, res, next) {
     }
 }
 
-/*
+
 function ensureAdmin(req, res, next) {
-    if (!req.session.user || req.session.user.role!="admin") {
+    if (!req.session.user || req.session.user.isAdmin != true) {
       res.redirect("/login");
     } else {
       next();
     }
 }
-*/
 
-app.get('/meals', (req, res) => {
-    res.render('meals', {
-        title: 'Top Meal Packages',
-        services: fakeDB.getServices()
+
+
+
+app.get('/meals',(req, res) => {
+    // res.render('meals', {
+    //     title: 'Top Meal Packages',
+    //     services: fakeDB.getServices()
+    // })
+
+    db.getMeals().then((data) => {
+        res.render('meals', {services: data});
+    }).catch((err) => {
+        res.render('/');
     })
 })
 
+app.get('/store', ensureLogin,(req, res) => {
+    // res.render('meals', {
+    //     title: 'Top Meal Packages',
+    //     services: fakeDB.getServices()
+    // })
+
+    db.getMeals().then((data) => {
+        res.render('store', {services: data});
+    }).catch((err) => {
+        res.render('/');
+    })
+})
+
+
+// This route is for testing purposes
 app.get('/users', (req, res) => {
-    db.getStudents().then((data) => {
-        res.render('users', {users: data});
+    db.getUsers().then((data) => {
+        res.render('users', {users: data, layout: false});
     }).catch((err) => {
         res.render('users');
     })
@@ -272,27 +311,6 @@ app.post('/login', (req, res) => {
 
 
 
-// app.get("/dashboard", (req, res) => {
-
-//     // db.getUsersByEmail(req.query.email).then((data) => {
-       
-//     // }).catch((err) => {
-//     //     res.render("dashboard")
-//     // })
-
-//     // res.render("dashboard", {
-//     //     users: ,
-//     //     user: req.session.user, 
-//     //     layout: false
-//     // });
-//     db.getUsers().then((data) => {
-//         res.render('dashboard', {
-//             users: (data.length != 0 ) ? data : undefined,
-//             title: 'Dashboard'
-//         })
-//     })
-
-// });
   
 // An authenticated route that requires the user to be logged in.
 // Notice the middleware 'ensureLogin' that comes before the function
@@ -305,9 +323,91 @@ app.get("/dashboard", ensureLogin, (req, res) => {
     });
 });
 
+app.post("/addmeals",ensureAdmin, (req, res) => {
+    let errors = {
+        messages : [],
+        fName: '',
+        lName: '',
+        email: ''
+    };
+
+    
+    // if (req.body.firstName == '') {
+
+    //     errors.messages.push('You must enter a First Name')
+    // } else {
+
+    //     errors.fName = req.body.firstName;
+    // }
+
+    
+
+    if (errors.messages.length > 0) {
+        res.render('addmeals', errors)
+        console.log(errors.messages)
+    } else {
+
+        // ADD MEALS!!
+
+        db.createMeal(req.body).then((inData) => {
+            req.session.user = inData;
+            res.redirect('/dashboard') 
+        }).catch((err) => {
+            console.log(`Error adding user ${err}`)
+            res.redirect('/dashboard')
+        })
+          
+    }
+})
+
+app.get("/addmeals", ensureAdmin, (req, res) => {
+    res.render("addmeals", {
+        title: "Add Meals",
+        users: req.session.user,
+    })
+})
+
+app.get("/editmeals", ensureAdmin, (req, res) => {
+    
+
+    db.getMeals().then((data) => {
+        res.render('editmeals', {
+            title: 'Edit Meals',
+            users: req.session.user,
+            meals: data
+        });
+    }).catch((err) => {
+        res.redirect('dashboard')
+    })
+})
+
+app.get("/edit", ensureAdmin,(req, res) => {
+    if (req.query.name) {
+        db.getMealsByName(req.query.name).then((meal) => {
+            console.log('EDIT LOG', meal[0]) // TEST PLS DELETE
+
+
+
+            res.render('edit', { data : meal[0] })
+        }).catch(() => {
+            console.log("Meal not Found")
+            res.redirect('dashboard')
+        })
+    }
+})
+
+app.post("/meals/edit", ensureAdmin, (req,res)=>{
+    db.editMeal(req.body).then(()=>{
+      res.redirect("/editmeals");
+    }).catch((err)=>{
+      console.log(err);
+      res.redirect("/editmeals");
+    })
+});
+
 app.get("/logout", function(req, res) {
-    req.session.reset();
-    res.redirect("/");
+    req.session.reset()
+    res.redirect("/")
   });
 
 const PORT = process.env.PORT || 3000;
