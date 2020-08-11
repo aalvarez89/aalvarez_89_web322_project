@@ -1,48 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script>
+            
+            function makeAJAXRequest(method, url, data){
+                if(data){ // Make an AJAX call using the provided data & method
+                    console.log("Adding: "+data.name);
+                    fetch(url, { 
+                        method: method,
+                        body: JSON.stringify(data),
+                        headers: { 'Content-Type': 'application/json'} 
+                    })
+                    .then(response => response.json())
+                    .then(json => {//responds with number of items in cart 
+                        //changes the number beside the cart
+                        $("span.glyphicon").text(`${json.data}`);
+                    }).catch((err)=>{
+                        console.log("Error Fetching");
+                        alert(err.message);
+                    }); 
 
-<h2 class="meals-h2">MEAL PACKAGES</h2>
+                }else{  // Make an AJAX call without providing data using the method
+                    fetch(url, { method: method })
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log(json);   
+                    }).catch((message)=>{
+                        alert(message);
+                    });
+                }
+            }
+            //makes ajax call to add a certain item by name to cart
+            function addToCart(data){
+                console.log("Calling add with: "+ data);
+                makeAJAXRequest("POST", "/addProduct", {name: data});
+            }
 
-<h2 class="meals-h3">TOP MEALS</h2>
+        </script>
+    </head>
 
-<article class="meals-container">
+    </body>
 
-    {{#each services}}
+        <h2 class="meals-h2">MEAL PACKAGES</h2>
 
-        {{#if this.isTopPkg }}
-            <div class="card">
-                <img class="item-pic" src="{{this.imageUrl}}" alt="{{this.name}}">
-                <span class="item-name">{{this.name}}</span>
-                <span class="item-syno">{{this.synopsis}}</span>
-                <span class="item-price">{{this.price}}</span>        
+        <h2 class="meals-h3">TOP MEALS</h2>
+        <section class="cart">
+            <img src=""/>
+            <p>Cart</p>
+
+        </section>
+
+        <article class="meals-container">
+
+            {{#each services}}
+
+                {{#if this.isTopPkg }}
+                    <div class="card">
+                        {{!-- <img class="item-pic" src="{{this.imageUrl}}" alt="{{this.name}}"> --}}
+                        <span class="item-name">{{this.name}}</span>
+                        <span class="item-syno">{{this.synopsis}}</span>
+                        <span class="item-price">{{this.price}}</span>        
+                        <div>
+                            <button type="button" onclick='addtoCart("{{name}}")'>
+                                Add to Cart
+                            </button>
+                            <button>
+                                Remove
+                            </button>
+
+                        </div>
+                    </div>
+
+                    {{/if}}
+
+                {{/each}}
             </div>
-            <button>
-                Add
-            </button>
-            <button>
-                Remove
-            </button>
+        </article>
 
-            {{/if}}
+        <h2 class="meals-h3">MENU</h2>
 
-        {{/each}}
-    </div>
-</article>
+        <article class="meals-menu">
 
-<h2 class="meals-h3">MENU</h2>
+            {{#each services}}
 
-<article class="meals-menu">
+                {{#unless this.isTopPkg }}
+                    <div class="menu-card">
+                        <div class="menu-item">
+                            <span class="menu-name">{{this.name}}</span>
+                            <span class="menu-price">{{this.price}}</span>        
+                        </div>
+                        <span class="menu-syno">{{this.synopsis}}</span>
+                    </div>
 
-    {{#each services}}
+                    <div>
+                            <button type="button" onclick='addToCart("{{name}}")'>
+                                Add to Cart
+                            </button>
+                            <button>
+                                Remove
+                            </button>
 
-        {{#unless this.isTopPkg }}
-            <div class="menu-card">
-                <div class="menu-item">
-                    <span class="menu-name">{{this.name}}</span>
-                    <span class="menu-price">{{this.price}}</span>        
-                </div>
-                <span class="menu-syno">{{this.synopsis}}</span>
+                        </div>
+                    {{/unless}}
+
+                {{/each}}
             </div>
-            {{/unless}}
+        </article>
 
-        {{/each}}
-    </div>
-</article>
+    </body>
+</html>

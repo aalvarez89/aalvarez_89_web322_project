@@ -3,8 +3,8 @@
  * 131005191 - aalvarez12
  * WEB322 Milestone Project
  * 
- * Heroku Link:
- * Github Link:
+ * Heroku Link: https://web322a1.herokuapp.com/
+ * Github Link: https://github.com/aalvarez89/aalvarez_89_web322_project
  * 
  */
 
@@ -53,8 +53,8 @@ const mailgun = require('mailgun-js')({apiKey: process.env.MG_KEY, domain: proce
 // ------------- DATABASE -------------
 
 // Instance of our fake Database 
-const fdb = require('./model/services.js');
-const fakeDB = new fdb();
+// const fdb = require('./model/services.js');
+// const fakeDB = new fdb();
 
 // Database Module that handles all DB operations
 const db = require('./db_module.js');
@@ -68,8 +68,8 @@ const clientSessions = require("client-sessions");
 app.use(clientSessions({
     cookieName: "session",          // this is the object name that will be added to 'req'
     secret: "week10example_web322", // this should be a long un-guessable string.
-    duration: 10 * 60 * 1000,        // duration of the session in milliseconds (4 minutes)
-    activeDuration: 60/60 * 1000    // the session will be extended by this many ms each request (1 minutes)
+    duration: 10 * 60 * 1000,        // duration of the session in milliseconds (10 minutes)
+    activeDuration: 1 * 60/60 * 1000    // the session will be extended by this many ms each request (1 minutes)
   }));
 
 
@@ -142,7 +142,7 @@ app.get('/store', ensureLogin,(req, res) => {
     // })
 
     db.getMeals().then((data) => {
-        res.render('store', {services: data});
+        res.render('store', {services: data, layout: false });
     }).catch((err) => {
         res.render('/');
     })

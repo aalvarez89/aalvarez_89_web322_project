@@ -98,9 +98,6 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
             reject("Hashing Error")
         });
 
-
-        
-
     })
 }
 
