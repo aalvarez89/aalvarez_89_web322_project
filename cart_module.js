@@ -1,41 +1,36 @@
-//start off with the cart empty. 
-var userCart = [];
+var storeCart = [];
 
-//adds a item from systems to the cart
 module.exports.addItem = (inItem)=>{
     console.log("Adding cart" + inItem.name);
     return new Promise((resolve,reject)=>{
-        userCart.push(inItem);
-        resolve(userCart.length);
+        storeCart.push(inItem);
+        resolve(storeCart.length);
     });
 }
 
-//removes an item from the cart
 module.exports.removeItem = (inItem)=>{
     return new Promise((resolve,reject)=>{
-        for(var i = 0; i< userCart.length; i++){
-            if(userCart[i].name == inItem){
-                userCart.splice(i,1);
-                i = userCart.length;
+        for(var i = 0; i< storeCart.length; i++){
+            if(storeCart[i].name == inItem){
+                storeCart.splice(i,1);
+                i = storeCart.length;
             }
         }
         resolve();
     });
 }
 
-//returns the cart array and all items
 module.exports.getCart = ()=>{
     return new Promise((resolve, reject)=>{
-            resolve(userCart);
+            resolve(storeCart);
     });
 }
 
-//calculates the price of all items in the cart
 module.exports.checkout = ()=>{
     return new Promise((resolve, reject)=>{
-        var price=0;//if check if car is empty
-        if(userCart){
-            userCart.forEach(x => {
+        var price=0;
+        if(storeCart){
+            storeCart.forEach(x => {
                 price += x.price;
             });
         }
