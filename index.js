@@ -88,9 +88,14 @@ const cart = require('./cart_module.js');
 app.get('/', (req, res) => {
 
 
-    res.render('home', {
-        title: 'Hunger Street',
-        services: fakeDB.getServices(),
+    
+    db.getMeals().then((data) => {
+        res.render('home', {
+            title: 'HungerStreet',
+            meals: data
+        });
+    }).catch((err) => {
+        console.log(err)
     })
 
     // ** OLD WAY -> Implemented fake database module in model/services.js
@@ -259,7 +264,7 @@ app.post('/login', (req, res) => {
 
         errors.messages.push(`Email required`)
     } else {
-        if (!req.body.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)){
+        if (!req.body.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
 
             errors.messages.push(`Email format invalid`)
         } else {
