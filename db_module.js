@@ -18,23 +18,32 @@ const userSchema = new Schema({
     isAdmin: Boolean
 })
 
-const mealSchema = new Schema({
+
+// const barSchema = new Schema({
+//     name: String,
+//     price: String,
+//     synopsis: String,
+//     noOfMeals: Number,
+//     imageUrl: String,
+//     isTopPkg: Boolean
+// })
+
+const chordSchema = new Schema({
     name: String,
-    price: String,
-    synopsis: String,
-    noOfMeals: Number,
-    imageUrl: String,
-    isTopPkg: Boolean
+    root: String,
+    notes: Array,
+    isTopChord: Boolean
 })
 
 let Users;
-let Meals;
+// let Meals;
+let Chords;
 
 
 module.exports.initialize = () => {
     return new Promise ((resolve, reject) => {
         // Connection String to MongoDB Server
-        let db = mongoose.createConnection(`mongodb+srv://kweizar:${process.env.MDB_PW}@cluster0-nzad7.gcp.mongodb.net/Seneca_AA?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+        let db = mongoose.createConnection(`mongodb+srv://kweizar:${process.env.MDB_PW}@cluster0-nzad7.gcp.mongodb.net/node_chordsDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
         
         // Fix deprecation warnings
         mongoose.set('useCreateIndex', true);
@@ -45,7 +54,7 @@ module.exports.initialize = () => {
         // Loads a collection called 'user_dbs' with the specified Schema [line6]
         db.once('open', () => {
             Users = db.model('user_dbs', userSchema);
-            Meals = db.model('meal_dbs', mealSchema);
+            Chords = db.model('chord_dbs', chordSchema);
             resolve()
         })
     })
@@ -101,33 +110,29 @@ module.exports.addUser = (data) => {//elaborate on resolve/reject
     })
 }
 
-module.exports.createMeal = (data) => {
+module.exports.createChord = (data) => {
     return new Promise ((resolve, reject) => {
         
-        data.isTopPkg = (data.isTopPkg)? true: false;
+        data.isTopChord = (data.isTopChord) ? true : false;
+        // data.isTopChord = false;
 
         for (let formEntry in data) {
             console.log(formEntry, formEntry.valueOf())
             if (data[formEntry] == '') data[formEntry] = null;
         }
 
-        let newMeal = new Meals(data);
+        let newChord = new Chords(data);
 
-        newMeal.save((err) => {
+        newChord.save((err) => {
             if (err) {
                 console.error(`ERROR: ${err}`)
                 reject()
             }
             else {
-                console.log(`Meal [${data.name}] stored in database: `)
+                console.log(`Chord [${data.name}] stored in database: `)
                 resolve()
             }
         })
-        
-
-
-        
-
     })
 }
 
@@ -147,20 +152,33 @@ module.exports.getUsers = (data) => {
     })
 }
 
-module.exports.getMeals = (data) => {
+// module.exports.getMeals = (data) => {
+//     return new Promise ((resolve, reject) => {
+//         Meals.find()
+//         .exec() //tells mongoose that we should run this find as a promise.
+//         .then((returnedMeals) => {
+//             resolve(returnedMeals.map((meal) => meal.toObject()))
+//         }).catch((err) => {
+//             console.log(`Error retrieving Meals: ${err}`)
+//             reject(err)
+//         })
+//     })
+// }
+
+module.exports.getChords = () => {
     return new Promise ((resolve, reject) => {
-        Meals.find()
+        Chords.find()
         .exec() //tells mongoose that we should run this find as a promise.
-        .then((returnedMeals) => {
-            resolve(returnedMeals.map((meal) => meal.toObject()))
+        .then((returnedChords) => {
+            resolve(returnedChords.map((chord) => chord.toObject()))
         }).catch((err) => {
-            console.log(`Error retrieving Meals: ${err}`)
+            console.log(`Error retrieving Chords: ${err}`)
             reject(err)
         })
     })
 }
 
-module.exports.getMealsByName = (inName) => {
+module.exports.getChordsByRoot= (inName) => {
     return new Promise ((resolve, reject) => {
         Meals.find({name: inName})
         .exec() //tells mongoose that we should run this find as a promise.
